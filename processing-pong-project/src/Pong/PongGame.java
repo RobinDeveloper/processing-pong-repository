@@ -9,6 +9,9 @@ public class PongGame extends PApplet {
     private Player playerOne;
     private Player playerTwo;
 
+    private int playerOneScore;
+    private int playerTwoScore;
+
     @Override
     public void settings() {
         size(1080, 720);
@@ -27,6 +30,8 @@ public class PongGame extends PApplet {
     public void draw() {
         background(0);
 
+        drawScore();
+
         ball.updateBallPhysics();
         ball.drawBall();
 
@@ -37,11 +42,23 @@ public class PongGame extends PApplet {
         playerTwo.drawPlayer();
     }
 
+    private void drawScore(){
+        fill(255);
+        textSize(64);
+        text("" + playerOneScore, width/2 - 100, 100);
+        text( "" + playerTwoScore, width/2 + 100, 100);
+    }
+
     public Player getPlayerOne(){
         return playerOne;
     }
 
     public Player getPlayerTwo()    {
         return playerTwo;
+    }
+
+    public void updateScore(int _scorePlayerOne, int _scorePlayerTwo){
+        playerOneScore += _scorePlayerOne;
+        playerTwoScore += _scorePlayerTwo;
     }
 }

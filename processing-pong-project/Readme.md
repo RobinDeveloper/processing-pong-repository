@@ -1,11 +1,11 @@
 #supercharged pong
 
-- ball
-- ball physics
-- player
-- player movement
-- player physics
-- score
+- <span style="color:green"> ball </span>
+- <span style="color:green"> ball physics </span>
+- <span style="color:green"> player </span>
+- <span style="color:green"> player movement </span>
+- <span style="color:green"> player physics </span>
+- <span style="color:green"> score </span>
 
 #cleanliness update
 

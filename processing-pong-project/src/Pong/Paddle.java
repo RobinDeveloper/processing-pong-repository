@@ -1,6 +1,7 @@
 package Pong;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 
 public class Paddle {
@@ -18,6 +19,15 @@ public class Paddle {
 
     public void drawPaddle(){
         sketch.fill(255);
+        sketch.rectMode(PConstants.CENTER);
         sketch.rect(position.x, position.y, size.x, size.y);
+    }
+
+    public PVector getSize(){
+        return size;
+    }
+
+    public PVector getPosition(){
+        return position;
     }
 }
