@@ -45,11 +45,11 @@ public class PhysicsEngine {
         circleDistance.x = abs(_ellipse.getPosition().x - _rectangle.getPosition().x);
         circleDistance.y = abs(_ellipse.getPosition().y - _rectangle.getPosition().y);
 
-        if (circleDistance.x > (_rectangle.getSize().x / 2 + _ellipse.getSize().x)) { return false; }
-        if (circleDistance.y > (_rectangle.getSize().y / 2 + _ellipse.getSize().y)) { return false; }
+        if (circleDistance.x > ((_rectangle.getSize().x + _ellipse.getSize().x) / 2 + _ellipse.getSize().x)) { return false; }
+        if (circleDistance.y > ((_rectangle.getSize().y + _ellipse.getSize().y) / 2 + _ellipse.getSize().y)) { return false; }
 
-        if (circleDistance.x <= (_rectangle.getSize().x / 2)) { return true; }
-        if (circleDistance.y <= (_rectangle.getSize().y / 2)) { return true; }
+        if (circleDistance.x <= ((_rectangle.getSize().x - _ellipse.getSize().x) / 2)) { return true; }
+        if (circleDistance.y <= ((_rectangle.getSize().y - _ellipse.getSize().y)  / 2)) { return true; }
 
         double cornerDistance_sq;
         cornerDistance_sq = Math.pow((circleDistance.x - (_rectangle.getSize().x / 2)), 2) +

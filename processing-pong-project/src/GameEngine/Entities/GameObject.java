@@ -36,7 +36,10 @@ public abstract class GameObject {
         return size;
     }
 
+    public int getColour() { return colour; }
+
     public PApplet getMasterSketch(){
         return masterSketch;
     }
+
 }

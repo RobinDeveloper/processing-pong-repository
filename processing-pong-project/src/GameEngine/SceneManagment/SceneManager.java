@@ -17,14 +17,16 @@ public class SceneManager {
         scenes = new ArrayList<Scene>();
     }
 
-    public SceneManager(Scene _scene)
+    public SceneManager(PApplet _masterSketch, Scene _scene)
     {
+        masterSketch = _masterSketch;
         scenes = new ArrayList<Scene>();
         scenes.add(_scene);
     }
 
-    public SceneManager(ArrayList<Scene> _scenes)
+    public SceneManager(PApplet _masterSketch,ArrayList<Scene> _scenes)
     {
+        masterSketch = _masterSketch;
         scenes = _scenes;
     }
 

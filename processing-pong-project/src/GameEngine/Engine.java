@@ -1,7 +1,10 @@
 package GameEngine;
 
+import GameEngine.PhysicsEngine.PhysicsEngine;
+import GameEngine.RenderingEngine.RenderingEngine;
 import GameEngine.SceneManagment.Scene;
 import GameEngine.SceneManagment.SceneManager;
+import GameSandbox.StandardPong;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -12,6 +15,8 @@ public class Engine extends PApplet {
     private PVector gameSize = new PVector(1080, 720);
 
     private SceneManager sceneManager;
+    private RenderingEngine renderingEngine;
+    private PhysicsEngine physicsEngine;
 
     @Override
     public void settings() {
@@ -21,18 +26,30 @@ public class Engine extends PApplet {
     @Override
     public void setup() {
         initialiseSceneManager();
+        initialiseRenderEngine();
+        initialisePhysicEngine();
     }
 
     @Override
     public void draw() {
-
+        background(0);
+        renderingEngine.RenderObjects();
+        physicsEngine.updatePhysics();
     }
 
     private void initialiseSceneManager(){
         ArrayList<Scene> gameScenes = new ArrayList<>();
+        gameScenes.add(new StandardPong());
 
-        sceneManager = new SceneManager(gameScenes);
+        sceneManager = new SceneManager(this, gameScenes);
         sceneManager.loadScene("StandardPong");
     }
 
+    private void initialiseRenderEngine(){
+        renderingEngine = new RenderingEngine(sceneManager.getActiveScene().getSceneObjects());
+    }
+
+    private void initialisePhysicEngine(){
+        physicsEngine = new PhysicsEngine(sceneManager.getActiveScene().getSceneObjects());
+    }
 }
