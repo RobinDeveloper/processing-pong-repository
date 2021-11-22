@@ -17,7 +17,5 @@
 #Variations
 
 - sphere pong single-player
-- trail renderers
-- more balls
-- speed
+- flowfield pong
 - Invisible ball when you move
