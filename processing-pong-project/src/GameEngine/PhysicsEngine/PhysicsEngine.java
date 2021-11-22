@@ -34,6 +34,10 @@ public class PhysicsEngine {
         gameObjects.add(_gameObject);
     }
 
+    public void updatePhysics(){
+        
+    }
+
     // Add ellipse radius too calculations
     private boolean rectEllipseIntersection(Ellipse _ellipse, Rectangle _rectangle){
         PVector circleDistance = new PVector();
