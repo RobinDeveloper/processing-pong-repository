@@ -22,7 +22,7 @@ public class StandardPong implements Scene {
     public void setupScene(PApplet _sketch) {
         player = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), _sketch.color(255), 25, 'w', 's');
         opponent = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100),_sketch.color(255), 25, 'i', 'k');
-        ball = new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-25,25), _sketch.random(-25,25)));
+        ball = new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-10,10)));
     }
 
     @Override

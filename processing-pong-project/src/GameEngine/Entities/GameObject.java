@@ -23,6 +23,7 @@ public abstract class GameObject {
         masterSketch = _masterSketch;
         position = _position;
         size = new PVector(_size, _size);
+        colour = _colour;
     }
 
     public abstract void updateObject();

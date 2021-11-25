@@ -32,6 +32,7 @@ public class RenderingEngine {
 
     public void RenderObjects(){
         for (int i = 0; i < gameObjects.size(); i++) {
+            gameObjects.get(i).updateObject();
             gameObjects.get(i).drawObject();
         }
     }

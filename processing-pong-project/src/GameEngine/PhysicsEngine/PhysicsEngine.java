@@ -3,6 +3,8 @@ package GameEngine.PhysicsEngine;
 import GameEngine.Entities.GameObject;
 import GameEngine.Entities.PrimitiveTypes.Ellipse;
 import GameEngine.Entities.PrimitiveTypes.Rectangle;
+import GameSandbox.Ball;
+import GameSandbox.Player;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -35,6 +37,28 @@ public class PhysicsEngine {
     }
 
     public void updatePhysics(){
+        for (int i = 0; i < gameObjects.size(); i++) {
+            for (int j = 0; j < gameObjects.size(); j++) {
+                if(gameObjects.get(i) != gameObjects.get(j))
+                    handlePhysics(gameObjects.get(i), gameObjects.get(j));
+            }
+        }
+    }
+
+    //by far the worst shit ive ever written
+    private void handlePhysics(GameObject _left, GameObject _right)
+    {
+        if(_left.getClass().equals(Ball.class)) {
+            if (rectEllipseIntersection((Ball) _left, (Player) _right))
+                intersectionHit(_left, _right);
+        }
+        else if(_right.getClass().equals(Ball.class))
+            if(rectEllipseIntersection((Ball)_right, (Player) _left))
+                intersectionHit(_left,_right);
+    }
+
+    private void intersectionHit(GameObject _left, GameObject _right)
+    {
         
     }
 
