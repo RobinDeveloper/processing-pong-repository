@@ -31,6 +31,14 @@ public class Ball {
     }
 
     public void drawBall(){
+        if(sketch.keyPressed)
+        {
+            if((sketch.key == 'w' || sketch.key == 's') && speed.x <= 0)
+                return;
+
+            if(sketch.key == 'i' || sketch.key == 'k' && speed.x >= 0)
+                return;
+        }
         sketch.fill(255);
         sketch.ellipse(position.x, position.y, radius, radius);
     }

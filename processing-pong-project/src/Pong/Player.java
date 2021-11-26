@@ -44,11 +44,11 @@ public class Player{
     }
 
     private void handlePlayerConstraints(){
-        if(position.y <= 0 + size.y)
-            position.y = 0 + size.y;
+        if(position.y <= 0 + (size.y / 2))
+            position.y = 0 + (size.y / 2);
 
-        if(position.y >= sketch.height - size.y)
-            position.y = sketch.height - size.y;
+        if(position.y >= sketch.height - (size.y / 2))
+            position.y = sketch.height - (size.y / 2);
     }
 
     public void drawPlayer(){
