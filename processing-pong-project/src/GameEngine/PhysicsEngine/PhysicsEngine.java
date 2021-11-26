@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.*;
 
+
 public class PhysicsEngine {
 
     private final ArrayList<GameObject> gameObjects;
@@ -49,17 +50,29 @@ public class PhysicsEngine {
     private void handlePhysics(GameObject _left, GameObject _right)
     {
         if(_left.getClass().equals(Ball.class)) {
+            if(ellipseWallIntersection((Ball)_left) != null)
+                ((Ball) _left).Reflect(ellipseWallIntersection((Ball)_left));
+
             if (rectEllipseIntersection((Ball) _left, (Player) _right))
                 intersectionHit(_left, _right);
         }
-        else if(_right.getClass().equals(Ball.class))
-            if(rectEllipseIntersection((Ball)_right, (Player) _left))
-                intersectionHit(_left,_right);
+
+        if(_right.getClass().equals(Ball.class)) {
+            if(ellipseWallIntersection((Ball)_right) != null)
+                ((Ball) _right).Reflect(ellipseWallIntersection((Ball)_right));
+
+            if (rectEllipseIntersection((Ball) _right, (Player) _left))
+                intersectionHit(_left, _right);
+        }
     }
 
     private void intersectionHit(GameObject _left, GameObject _right)
     {
-        
+        if(_left.getClass().equals(Ball.class))
+            ((Ball) _left).Reflect(new PVector(-1, 1));
+
+        if(_right.getClass().equals(Ball.class))
+            ((Ball) _right).Reflect(new PVector(-1, 1));
     }
 
     // Add ellipse radius too calculations
@@ -92,10 +105,20 @@ public class PhysicsEngine {
         return _rect.getPosition().y <= 0 + _rect.getSize().y || _rect.getPosition().y >= 720 - _rect.getSize().y;
     }
 
-    private boolean ellipseWallIntersection(Ellipse _ellipse){
-        return _ellipse.getPosition().x <= 0 + _ellipse.getSize().x ||
-                _ellipse.getPosition().x >= 1080 - _ellipse.getSize().x ||
-                _ellipse.getPosition().y >= 720 - _ellipse.getSize().x ||
-                _ellipse.getPosition().y <= 0 + _ellipse.getSize().x;
+    private HitSide ellipseWallIntersection(Ellipse _ellipse){
+
+        if(_ellipse.getPosition().x <= 0 + _ellipse.getSize().x)
+            return HitSide.LEFT;
+
+        if(_ellipse.getPosition().x >= 1080 - _ellipse.getSize().x)
+            return HitSide.RIGHT;
+
+        if(_ellipse.getPosition().y >= 720 - _ellipse.getSize().x)
+            return HitSide.TOP;
+
+        if(_ellipse.getPosition().y <= 0 + _ellipse.getSize().x)
+            return HitSide.BOTTOM;
+
+        else return null;
     }
 }

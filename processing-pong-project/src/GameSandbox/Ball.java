@@ -1,6 +1,7 @@
 package GameSandbox;
 
 import GameEngine.Entities.PrimitiveTypes.Ellipse;
+import GameEngine.PhysicsEngine.HitSide;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -8,10 +9,7 @@ public class Ball extends Ellipse {
 
     private PVector speed;
 
-    enum HitSide{
-        LEFT,
-        RIGHT
-    }
+
 
     public Ball(PApplet _masterSketch, PVector _position, float _size, int _colour, PVector _speed) {
         super(_masterSketch, _position, _size, _colour);
@@ -21,11 +19,26 @@ public class Ball extends Ellipse {
     @Override
     public void updateObject() {
         handleMovement();
+    }
 
-        if(position.x <= 0)
-            handleScore(HitSide.LEFT);
-        if(position.x >= masterSketch.width)
-            handleScore(HitSide.RIGHT);
+    public void Reflect(HitSide _direction){
+        switch (_direction)
+        {
+            case LEFT -> {
+                handleScore(HitSide.LEFT);
+            }
+            case RIGHT -> {
+                handleScore(HitSide.RIGHT);
+            }
+            case TOP, BOTTOM -> {
+                Reflect(new PVector(1, -1));
+            }
+        }
+    }
+
+    public void Reflect(PVector _direction){
+        speed.x *= _direction.x;
+        speed.y *= _direction.y;
     }
 
     private void handleMovement()
@@ -36,5 +49,8 @@ public class Ball extends Ellipse {
     private void handleScore(HitSide _side)
     {
         //implement this or something
+        position = new PVector(masterSketch.width/2, masterSketch.height/2);
+        speed = new PVector(masterSketch.random(-10,10), masterSketch.random(-10,10));
+        //ADD SCORE
     }
 }
