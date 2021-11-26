@@ -30,7 +30,7 @@ public class RenderingEngine {
         gameObjects.add(_gameObject);
     }
 
-    public void RenderObjects(){
+    public void renderObjects(){
         for (int i = 0; i < gameObjects.size(); i++) {
             gameObjects.get(i).updateObject();
             gameObjects.get(i).drawObject();

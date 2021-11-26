@@ -33,11 +33,11 @@ public class Player extends Rectangle {
     }
 
     private void handlePlayerConstraints(){
-        if(position.y <= 0 + size.y)
-            position.y = 0 + size.y;
+        if(position.y <= 0 + (size.y / 2))
+            position.y = 0 + (size.y / 2);
 
-        if(position.y >= masterSketch.height - size.y)
-            position.y = masterSketch.height - size.y;
+        if(position.y >= masterSketch.height - (size.y / 2))
+            position.y = masterSketch.height - (size.y / 2);
     }
 
 }

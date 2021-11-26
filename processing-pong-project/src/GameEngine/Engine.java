@@ -33,8 +33,9 @@ public class Engine extends PApplet {
     @Override
     public void draw() {
         background(0);
-        renderingEngine.RenderObjects();
+        renderingEngine.renderObjects();
         physicsEngine.updatePhysics();
+        sceneManager.getActiveScene().updateScene();
     }
 
     private void initialiseSceneManager(){
@@ -51,5 +52,9 @@ public class Engine extends PApplet {
 
     private void initialisePhysicEngine(){
         physicsEngine = new PhysicsEngine(sceneManager.getActiveScene().getSceneObjects());
+    }
+
+    public Scene getActiveScene(){
+        return sceneManager.getActiveScene();
     }
 }

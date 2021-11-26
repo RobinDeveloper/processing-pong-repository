@@ -5,6 +5,7 @@ import GameEngine.Entities.PrimitiveTypes.Ellipse;
 import GameEngine.Entities.PrimitiveTypes.Rectangle;
 import GameSandbox.Ball;
 import GameSandbox.Player;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -14,65 +15,63 @@ import static java.lang.Math.*;
 
 public class PhysicsEngine {
 
-    private final ArrayList<GameObject> gameObjects;
+    private ArrayList<Ellipse> ellipses;
+    private ArrayList<Rectangle> rectangles;
 
     public PhysicsEngine()
     {
-        gameObjects = new ArrayList<GameObject>();
+        ellipses = new ArrayList<Ellipse>();
+        rectangles = new ArrayList<Rectangle>();
     }
 
     public PhysicsEngine(GameObject _gameObject)
     {
-        gameObjects = new ArrayList<GameObject>();
-        gameObjects.add(_gameObject);
+        ellipses = new ArrayList<Ellipse>();
+        rectangles = new ArrayList<Rectangle>();
+
+        if(_gameObject.getClass().equals(Ellipse.class))
+            ellipses.add((Ellipse) _gameObject);
+
+        if(_gameObject.getClass().equals(Rectangle.class))
+            rectangles.add((Rectangle) _gameObject);
     }
 
     public PhysicsEngine(ArrayList<GameObject> _gameObjects)
     {
-        gameObjects = _gameObjects;
+        ellipses = new ArrayList<Ellipse>();
+        rectangles = new ArrayList<Rectangle>();
+
+        for (int i = 0; i < _gameObjects.size(); i++) {
+            if(_gameObjects.get(i).getClass().equals(Ball.class))
+                ellipses.add((Ellipse) _gameObjects.get(i));
+
+            if(_gameObjects.get(i).getClass().equals(Player.class))
+                rectangles.add((Rectangle) _gameObjects.get(i));
+        }
     }
 
     public void addGameObject(GameObject _gameObject)
     {
-        gameObjects.add(_gameObject);
+        if(_gameObject.getClass().equals(Ellipse.class))
+            ellipses.add((Ellipse) _gameObject);
+
+        if(_gameObject.getClass().equals(Rectangle.class))
+            rectangles.add((Rectangle) _gameObject);
     }
 
     public void updatePhysics(){
-        for (int i = 0; i < gameObjects.size(); i++) {
-            for (int j = 0; j < gameObjects.size(); j++) {
-                if(gameObjects.get(i) != gameObjects.get(j))
-                    handlePhysics(gameObjects.get(i), gameObjects.get(j));
-            }
+        for (int i = 0; i < ellipses.size(); i++) {
+            checkEllipseRectangleIntersection(ellipses.get(i));
+            checkEllipseWallCollision(ellipses.get(i));
         }
     }
 
-    //by far the worst shit ive ever written
-    private void handlePhysics(GameObject _left, GameObject _right)
+    private void checkEllipseRectangleIntersection(Ellipse _ellipse)
     {
-        if(_left.getClass().equals(Ball.class)) {
-            if(ellipseWallIntersection((Ball)_left) != null)
-                ((Ball) _left).Reflect(ellipseWallIntersection((Ball)_left));
-
-            if (rectEllipseIntersection((Ball) _left, (Player) _right))
-                intersectionHit(_left, _right);
+        for (int i = 0; i < rectangles.size(); i++) {
+            if(rectEllipseIntersection(_ellipse, rectangles.get(i)))
+                _ellipse.rectangleHit();
         }
-
-        if(_right.getClass().equals(Ball.class)) {
-            if(ellipseWallIntersection((Ball)_right) != null)
-                ((Ball) _right).Reflect(ellipseWallIntersection((Ball)_right));
-
-            if (rectEllipseIntersection((Ball) _right, (Player) _left))
-                intersectionHit(_left, _right);
-        }
-    }
-
-    private void intersectionHit(GameObject _left, GameObject _right)
-    {
-        if(_left.getClass().equals(Ball.class))
-            ((Ball) _left).Reflect(new PVector(-1, 1));
-
-        if(_right.getClass().equals(Ball.class))
-            ((Ball) _right).Reflect(new PVector(-1, 1));
     }
 
     // Add ellipse radius too calculations
@@ -82,11 +81,11 @@ public class PhysicsEngine {
         circleDistance.x = abs(_ellipse.getPosition().x - _rectangle.getPosition().x);
         circleDistance.y = abs(_ellipse.getPosition().y - _rectangle.getPosition().y);
 
-        if (circleDistance.x > ((_rectangle.getSize().x + _ellipse.getSize().x) / 2 + _ellipse.getSize().x)) { return false; }
-        if (circleDistance.y > ((_rectangle.getSize().y + _ellipse.getSize().y) / 2 + _ellipse.getSize().y)) { return false; }
+        if (circleDistance.x > ((_rectangle.getSize().x) / 2 + _ellipse.getSize().x)) { return false; }
+        if (circleDistance.y > ((_rectangle.getSize().y) / 2 + _ellipse.getSize().y)) { return false; }
 
-        if (circleDistance.x <= ((_rectangle.getSize().x - _ellipse.getSize().x) / 2)) { return true; }
-        if (circleDistance.y <= ((_rectangle.getSize().y - _ellipse.getSize().y)  / 2)) { return true; }
+        if (circleDistance.x <= ((_rectangle.getSize().x) / 2)) { return true; }
+        if (circleDistance.y <= ((_rectangle.getSize().y)  / 2)) { return true; }
 
         double cornerDistance_sq;
         cornerDistance_sq = Math.pow((circleDistance.x - (_rectangle.getSize().x / 2)), 2) +
@@ -95,30 +94,19 @@ public class PhysicsEngine {
         return (cornerDistance_sq <= (Math.pow(_ellipse.getSize().x, 2)));
     }
 
-    //rects get drawn center not leftTop
-    private boolean rectIntersection(Rectangle _rectOne, Rectangle _rectTwo)
-    {
-        return false;
-    }
+    private void checkEllipseWallCollision(Ellipse _ellipse){
+        PApplet sketch = _ellipse.getMasterSketch();
 
-    private boolean rectWallIntersection(Rectangle _rect){
-        return _rect.getPosition().y <= 0 + _rect.getSize().y || _rect.getPosition().y >= 720 - _rect.getSize().y;
-    }
+        if(_ellipse.getPosition().x <= 0)
+            _ellipse.wallHit(Hitside.Left);
 
-    private HitSide ellipseWallIntersection(Ellipse _ellipse){
+        if(_ellipse.getPosition().x >= sketch.width)
+            _ellipse.wallHit(Hitside.Right);
 
-        if(_ellipse.getPosition().x <= 0 + _ellipse.getSize().x)
-            return HitSide.LEFT;
+        if(_ellipse.getPosition().y <= 0)
+            _ellipse.wallHit(Hitside.Bottom);
 
-        if(_ellipse.getPosition().x >= 1080 - _ellipse.getSize().x)
-            return HitSide.RIGHT;
-
-        if(_ellipse.getPosition().y >= 720 - _ellipse.getSize().x)
-            return HitSide.TOP;
-
-        if(_ellipse.getPosition().y <= 0 + _ellipse.getSize().x)
-            return HitSide.BOTTOM;
-
-        else return null;
+        if(_ellipse.getPosition().y >= sketch.height)
+            _ellipse.wallHit(Hitside.Top);
     }
 }
