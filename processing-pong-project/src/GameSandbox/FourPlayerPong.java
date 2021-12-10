@@ -12,8 +12,8 @@ public class FourPlayerPong implements Scene {
     private PApplet masterSketch;
 
     private Ball ball;
-    private Player[] teamOne;
-    private Player[] teamTwo;
+    private Player[] teamOne = new Player[2];
+    private Player[] teamTwo = new Player[2];
 
     private int teamOneScore = 0;
     private int teamTwoScore = 0;
@@ -27,10 +27,10 @@ public class FourPlayerPong implements Scene {
     public void setupScene(PApplet _sketch) {
         masterSketch = _sketch;
 
-        teamOne[0] = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), _sketch.color(255), 25, 'w', 's');
-        teamOne[1] = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), _sketch.color(255), 25, 'r', 'f');
-        teamTwo[0] = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100),_sketch.color(255), 25, 'i', 'k');
-        teamTwo[0] = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100),_sketch.color(255), 25, 'l', 'p');
+        teamOne[0] = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), new PVector(0, masterSketch.height / 2), _sketch.color(255), 25, 'w', 's');
+        teamOne[1] = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), new PVector(masterSketch.height / 2, masterSketch.height), _sketch.color(255), 25, 'r', 'f');
+        teamTwo[0] = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100), new PVector(0, masterSketch.height / 2), _sketch.color(255), 25, 'i', 'k');
+        teamTwo[0] = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100), new PVector(masterSketch.height / 2, masterSketch.height), _sketch.color(255), 25, 'l', 'p');
 
         ball = new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-10,10)));
 

@@ -81,8 +81,8 @@ public class PhysicsEngine {
         circleDistance.x = abs(_ellipse.getPosition().x - _rectangle.getPosition().x);
         circleDistance.y = abs(_ellipse.getPosition().y - _rectangle.getPosition().y);
 
-        if (circleDistance.x > ((_rectangle.getSize().x) / 2 + _ellipse.getSize().x)) { return false; }
-        if (circleDistance.y > ((_rectangle.getSize().y) / 2 + _ellipse.getSize().y)) { return false; }
+        if (circleDistance.x > ((_rectangle.getSize().x) / 2)) { return false; }
+        if (circleDistance.y > ((_rectangle.getSize().y) / 2)) { return false; }
 
         if (circleDistance.x <= ((_rectangle.getSize().x) / 2)) { return true; }
         if (circleDistance.y <= ((_rectangle.getSize().y)  / 2)) { return true; }
@@ -95,7 +95,10 @@ public class PhysicsEngine {
     }
 
     private boolean rectRectCollision(Rectangle _rectangle, Rectangle _collisionRectangle){
-        return false;
+        return (_rectangle.getPosition().y - (_rectangle.getSize().y / 2)) <=
+                (_collisionRectangle.getPosition().y - (_collisionRectangle.getSize().y / 2)) ||
+                (_collisionRectangle.getPosition().y - (_collisionRectangle.getSize().y / 2)) <=
+                        (_rectangle.getPosition().y - (_rectangle.getSize().y / 2));
     }
 
     private void checkEllipseWallCollision(Ellipse _ellipse){

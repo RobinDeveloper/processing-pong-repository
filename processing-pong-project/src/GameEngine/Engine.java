@@ -4,6 +4,7 @@ import GameEngine.PhysicsEngine.PhysicsEngine;
 import GameEngine.RenderingEngine.RenderingEngine;
 import GameEngine.SceneManagment.Scene;
 import GameEngine.SceneManagment.SceneManager;
+import GameSandbox.FourPlayerPong;
 import GameSandbox.ScoreBallPong;
 import GameSandbox.StandardPong;
 import processing.core.PApplet;
@@ -43,9 +44,10 @@ public class Engine extends PApplet {
         ArrayList<Scene> gameScenes = new ArrayList<>();
         gameScenes.add(new StandardPong());
         gameScenes.add(new ScoreBallPong());
+        gameScenes.add(new FourPlayerPong());
 
         sceneManager = new SceneManager(this, gameScenes);
-        sceneManager.loadScene("StandardPong");
+        sceneManager.loadScene("FourPlayerPong");
     }
 
     private void initialiseRenderEngine(){

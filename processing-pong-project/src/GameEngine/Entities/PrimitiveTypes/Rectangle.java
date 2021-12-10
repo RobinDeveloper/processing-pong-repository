@@ -1,6 +1,7 @@
 package GameEngine.Entities.PrimitiveTypes;
 
 import GameEngine.Entities.GameObject;
+import GameEngine.PhysicsEngine.Hitside;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;

@@ -1,6 +1,7 @@
 package GameSandbox;
 
 import GameEngine.Entities.PrimitiveTypes.Rectangle;
+import GameEngine.PhysicsEngine.Hitside;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -10,9 +11,12 @@ public class Player extends Rectangle {
     private char keyUp;
     private char keyDown;
 
-    public Player(PApplet _masterSketch, PVector _position, PVector _size, int _colour, float _movementSpeed, char _keyUp, char _keyDown) {
+    private PVector sizeContraints;
+
+    public Player(PApplet _masterSketch, PVector _position, PVector _size, PVector _sizeConstraints, int _colour, float _movementSpeed, char _keyUp, char _keyDown) {
         super(_masterSketch, _position, _size, _colour);
         movementSpeed = _movementSpeed;
+        sizeContraints = _sizeConstraints;
         keyUp = _keyUp;
         keyDown = _keyDown;
     }
@@ -33,11 +37,10 @@ public class Player extends Rectangle {
     }
 
     private void handlePlayerConstraints(){
-        if(position.y <= 0 + (size.y / 2))
-            position.y = 0 + (size.y / 2);
+        if(position.y <= sizeContraints.x + (size.y / 2))
+            position.y = sizeContraints.x + (size.y / 2);
 
-        if(position.y >= masterSketch.height - (size.y / 2))
-            position.y = masterSketch.height - (size.y / 2);
+        if(position.y >= sizeContraints.y - (size.y / 2))
+            position.y = sizeContraints.y - (size.y / 2);
     }
-
 }
