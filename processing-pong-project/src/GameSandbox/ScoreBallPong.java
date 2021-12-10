@@ -1,18 +1,17 @@
 package GameSandbox;
 
+import GameEngine.Engine;
 import GameEngine.Entities.GameObject;
 import GameEngine.SceneManagment.Scene;
-import GameSandbox.Noise.FlowFieldGeneration;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
 
-public class StandardPong implements Scene {
-
+public class ScoreBallPong implements Scene {
     private PApplet masterSketch;
 
-    private Ball ball;
+    private ArrayList<Ball> ball;
     private Player player;
     private Player opponent;
 
@@ -22,7 +21,7 @@ public class StandardPong implements Scene {
 
     @Override
     public String getSceneName() {
-        return "StandardPong";
+        return "ScoreBallPong";
     }
 
     @Override
@@ -31,7 +30,8 @@ public class StandardPong implements Scene {
 
         player = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), _sketch.color(255), 25, 'w', 's');
         opponent = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100),_sketch.color(255), 25, 'i', 'k');
-        ball = new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-10,10)));
+        ball = new ArrayList<Ball>();
+        ball.add(new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-10,10))));
 
         updateScore(0,0);
     }
@@ -52,12 +52,16 @@ public class StandardPong implements Scene {
     public void updateScore(int _addPlayerOne, int _addPlayerTwo) {
         playerOneScore += _addPlayerOne;
         playerTwoScore += _addPlayerTwo;
+        ball.add(new Ball(masterSketch, new PVector(masterSketch.width/2, masterSketch.height/2), 25, masterSketch.color(255), new PVector(masterSketch.random(-10,10), masterSketch.random(-10,10))));
+        ((Engine)masterSketch).updateEngine(); //this is very yikes
     }
 
     @Override
     public ArrayList<GameObject> getSceneObjects() {
         ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-        gameObjects.add(ball);
+        for (int i = 0; i < ball.size(); i++) {
+            gameObjects.add(ball.get(i));
+        }
         gameObjects.add(player);
         gameObjects.add(opponent);
 

@@ -74,7 +74,7 @@ public class PhysicsEngine {
         }
     }
 
-    // Add ellipse radius too calculations
+    // Add ellipse radius too calculations and also use dot product to find direction because rn it hits from the back too
     private boolean rectEllipseIntersection(Ellipse _ellipse, Rectangle _rectangle){
         PVector circleDistance = new PVector();
 
@@ -92,6 +92,10 @@ public class PhysicsEngine {
                 Math.pow((circleDistance.y - (_rectangle.getSize().x / 2) ), 2);
 
         return (cornerDistance_sq <= (Math.pow(_ellipse.getSize().x, 2)));
+    }
+
+    private boolean rectRectCollision(Rectangle _rectangle, Rectangle _collisionRectangle){
+        return false;
     }
 
     private void checkEllipseWallCollision(Ellipse _ellipse){

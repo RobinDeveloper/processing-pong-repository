@@ -4,6 +4,7 @@ import GameEngine.Engine;
 import GameEngine.Entities.PrimitiveTypes.Ellipse;
 import GameEngine.PhysicsEngine.Hitside;
 import GameEngine.SceneManagment.Scene;
+import GameSandbox.Noise.FlowFieldGeneration;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -11,9 +12,13 @@ public class Ball extends Ellipse {
 
     private PVector speed;
 
+    private FlowFieldGeneration flowFieldGeneration;
+
+
     public Ball(PApplet _masterSketch, PVector _position, float _size, int _colour, PVector _speed) {
         super(_masterSketch, _position, _size, _colour);
         speed = _speed;
+        flowFieldGeneration = new FlowFieldGeneration(masterSketch);
     }
 
     @Override
@@ -23,7 +28,6 @@ public class Ball extends Ellipse {
 
     @Override
     public void wallHit(Hitside _hitSide) {
-        System.out.println("Hit Wall");
         switch (_hitSide)
         {
             case Left, Right -> {
@@ -37,12 +41,12 @@ public class Ball extends Ellipse {
 
     @Override
     public void rectangleHit() {
-        System.out.println("Hit Player");
         speed = new PVector(speed.x * -1, speed.y);
     }
 
     private void handleMovement()
     {
+        //PVector[][][] result = flowFieldGeneration.CalculateFlowField(); //TODO implement this
         position.add(speed);
     }
 

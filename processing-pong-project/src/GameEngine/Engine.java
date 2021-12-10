@@ -4,6 +4,7 @@ import GameEngine.PhysicsEngine.PhysicsEngine;
 import GameEngine.RenderingEngine.RenderingEngine;
 import GameEngine.SceneManagment.Scene;
 import GameEngine.SceneManagment.SceneManager;
+import GameSandbox.ScoreBallPong;
 import GameSandbox.StandardPong;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -41,6 +42,7 @@ public class Engine extends PApplet {
     private void initialiseSceneManager(){
         ArrayList<Scene> gameScenes = new ArrayList<>();
         gameScenes.add(new StandardPong());
+        gameScenes.add(new ScoreBallPong());
 
         sceneManager = new SceneManager(this, gameScenes);
         sceneManager.loadScene("StandardPong");
@@ -52,6 +54,11 @@ public class Engine extends PApplet {
 
     private void initialisePhysicEngine(){
         physicsEngine = new PhysicsEngine(sceneManager.getActiveScene().getSceneObjects());
+    }
+
+    public void updateEngine(){
+        physicsEngine = new PhysicsEngine(sceneManager.getActiveScene().getSceneObjects());
+        renderingEngine = new RenderingEngine(sceneManager.getActiveScene().getSceneObjects());
     }
 
     public Scene getActiveScene(){
