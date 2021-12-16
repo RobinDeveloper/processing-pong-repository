@@ -2,6 +2,7 @@ package GameSandbox.Noise;
 
 import processing.core.PVector;
 
+//Biggest bundle of bullshit ever barely know if it works.
 public class FastNoise {
 
     private static int seed = 1337;

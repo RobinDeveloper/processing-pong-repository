@@ -3,16 +3,18 @@ package GameSandbox;
 import GameEngine.Engine;
 import GameEngine.Entities.GameObject;
 import GameEngine.SceneManagment.Scene;
+import GameSandbox.Noise.FlowFieldGeneration;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
 
-//Every goal adds an extra ball to the game (gets out of hand very fast)
-public class ScoreBallPong implements Scene {
+//This version of pong has it that when u move the ball will go invisible
+public class BlindPong implements Scene {
+
     private PApplet masterSketch;
 
-    private ArrayList<Ball> balls;
+    private Ball ball;
     private Player player;
     private Player opponent;
 
@@ -22,7 +24,7 @@ public class ScoreBallPong implements Scene {
 
     @Override
     public String getSceneName() {
-        return "ScoreBallPong";
+        return "BlindPong";
     }
 
     @Override
@@ -37,16 +39,9 @@ public class ScoreBallPong implements Scene {
 
         player = new Player(_sketch, new PVector(50,_sketch.height/2), new PVector(25,100), new PVector(0, masterSketch.height), _sketch.color(255), 25, 'w', 's');
         opponent = new Player(_sketch, new PVector(_sketch.width - 50, _sketch.height/2), new PVector(25,100),new PVector(0, masterSketch.height),_sketch.color(255), 25, 'i', 'k');
-        balls = new ArrayList<Ball>();
+        ball = new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-2,2)));
 
-        for (int i = 0; i < playerOneScore + playerTwoScore; i++) {
-            balls.add(new Ball(_sketch, new PVector(_sketch.width/2, _sketch.height/2), 25, _sketch.color(255), new PVector(_sketch.random(-10,10), _sketch.random(-2,2))));
-        }
-
-        for (int i = 0; i < balls.size(); i++) {
-            balls.get(i).setBlindPong(false);
-        }
-
+        ball.setBlindPong(true);
 
         updateScore(0,0);
     }
@@ -59,30 +54,36 @@ public class ScoreBallPong implements Scene {
         masterSketch.text("" + playerTwoScore, (masterSketch.width/2 + 50), (75));
         masterSketch.text(getSceneName(), 50, masterSketch.height - 50);
 
+        handleBallVisability();
 
         for (int i = 0; i < 10; i++) {
             masterSketch.rect(masterSketch.width / 2, 25 + (i * 75), 20, 50);
         }
     }
 
-    //ADD HELLA BALLS BABY EACH GOAL.
     @Override
     public void updateScore(int _addPlayerOne, int _addPlayerTwo) {
         playerOneScore = _addPlayerOne;
         playerTwoScore = _addPlayerTwo;
-        balls.add(new Ball(masterSketch, new PVector(masterSketch.width/2, masterSketch.height/2), 25, masterSketch.color(255), new PVector(masterSketch.random(-10,10), masterSketch.random(-2,2))));
-        ((Engine)masterSketch).updateEngine(); //this is very yikes
     }
 
     @Override
     public ArrayList<GameObject> getSceneObjects() {
         ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-        for (int i = 0; i < balls.size(); i++) {
-            gameObjects.add(balls.get(i));
-        }
+        gameObjects.add(ball);
         gameObjects.add(player);
         gameObjects.add(opponent);
 
         return gameObjects;
+    }
+
+    //Only difference with standardPong it checks if the speed is going left or right and then which player is moving to determine if it needs to be invisible.
+    private void handleBallVisability()
+    {
+        if(ball.getSpeed().x <= 0)
+            ball.setInvis(opponent.getMoving());
+
+        if(ball.getSpeed().x >= 0)
+            ball.setInvis(player.getMoving());
     }
 }

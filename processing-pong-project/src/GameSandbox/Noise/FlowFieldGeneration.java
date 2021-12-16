@@ -3,6 +3,7 @@ package GameSandbox.Noise;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+//Again can't get it too work properly. need to spend some more time on it.
 public class FlowFieldGeneration {
 
     private PVector grid = new PVector(100,100,1);

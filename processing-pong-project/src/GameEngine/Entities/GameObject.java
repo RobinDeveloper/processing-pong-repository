@@ -3,6 +3,7 @@ package GameEngine.Entities;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+//Base class for all gameObject in a scene
 public abstract class GameObject {
 
     protected PApplet masterSketch;
@@ -26,9 +27,11 @@ public abstract class GameObject {
         colour = _colour;
     }
 
+    //Base functions to call without knowing child type
     public abstract void updateObject();
     public abstract void drawObject();
 
+    //Standerd get functions for member variables
     public PVector getPosition(){
         return position;
     }

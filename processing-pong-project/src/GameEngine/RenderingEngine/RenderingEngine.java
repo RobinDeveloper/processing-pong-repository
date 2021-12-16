@@ -30,6 +30,7 @@ public class RenderingEngine {
         gameObjects.add(_gameObject);
     }
 
+    //Simply renders and updates each object within the active scene
     public void renderObjects(){
         for (int i = 0; i < gameObjects.size(); i++) {
             gameObjects.get(i).updateObject();

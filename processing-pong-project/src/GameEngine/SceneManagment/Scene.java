@@ -5,6 +5,7 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
+//base interface for scenes
 public interface Scene {
 
     public String getSceneName();

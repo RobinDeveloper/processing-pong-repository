@@ -50,4 +50,8 @@ public class SceneManager {
         return activeScene;
     }
 
+    public ArrayList<Scene> getScenes(){
+        return scenes;
+    }
+
 }

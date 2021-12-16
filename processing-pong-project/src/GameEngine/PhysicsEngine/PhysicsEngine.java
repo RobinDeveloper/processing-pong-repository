@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.*;
 
-
+// handles all the physics in the game. (unless you count movement as physics)
 public class PhysicsEngine {
 
     private ArrayList<Ellipse> ellipses;
@@ -74,7 +74,8 @@ public class PhysicsEngine {
         }
     }
 
-    // Add ellipse radius too calculations and also use dot product to find direction because rn it hits from the back too
+    //add dot product check if its on the backside of the rect
+    //Handles ellipse collision with rectangles
     private boolean rectEllipseIntersection(Ellipse _ellipse, Rectangle _rectangle){
         PVector circleDistance = new PVector();
 
@@ -94,6 +95,7 @@ public class PhysicsEngine {
         return (cornerDistance_sq <= (Math.pow(_ellipse.getSize().x, 2)));
     }
 
+    //unused function to check if two rectangles have collision with simple AABB logic
     private boolean rectRectCollision(Rectangle _rectangle, Rectangle _collisionRectangle){
         return (_rectangle.getPosition().y - (_rectangle.getSize().y / 2)) <=
                 (_collisionRectangle.getPosition().y - (_collisionRectangle.getSize().y / 2)) ||
@@ -101,6 +103,7 @@ public class PhysicsEngine {
                         (_rectangle.getPosition().y - (_rectangle.getSize().y / 2));
     }
 
+    //Wall check for the ball could have been handled differently
     private void checkEllipseWallCollision(Ellipse _ellipse){
         PApplet sketch = _ellipse.getMasterSketch();
 

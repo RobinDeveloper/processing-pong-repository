@@ -6,23 +6,24 @@
 - <span style="color:green"> scene management </span>  
 
 TODO
-- update so physics engine accepts ellipse and rect not player and ball
-- player ball intersection bug
+- <span style="color:green"> update so physics engine accepts ellipse and rect not player and ball </span>
+- <span style="color:red"> player ball intersection bug </span> (just add dot product check)
 
 # Gameplay
 - <span style="color:green"> Ball movement  </span>
 - <span style="color:green"> Ball physics </span> 
 - <span style="color:green"> Player movement </span>  
 - <span style="color:green"> Player Physics </span> 
-- <span style="color:green"> score handeling </span> 
-- main menu
-- win condition
-- ball reflect more interesting
+- <span style="color:green"> score handling </span> 
+- <span style="color:red"> main menu </span> (removed)
+- <span style="color:green"> ball reflect more interesting </span>
 
 
 # Variations
 
-- flowfield pong
+- <span style="color:red"> flow-field pong  </span> (no implementation)
 - <span style="color:green"> Invisible ball when you move (made in original version) </span>  
-- Coop circular pong where colours define who have to hit the ball
-  - if the color is blue blue has to hit the ball if the colour is green yellow and blue both have to hit
+- <span style="color:green"> 4 player aka 2 teams pong </span>
+- <span style="color:green"> hella balls </span>
+- <span style="color:green"> standard pong </span>
+- <span style="color:red"> ability pong </span> (would be nice to still add). shouldn't take more than a night.

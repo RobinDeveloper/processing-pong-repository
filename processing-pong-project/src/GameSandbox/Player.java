@@ -13,6 +13,8 @@ public class Player extends Rectangle {
 
     private PVector sizeContraints;
 
+    private boolean moving;
+
     public Player(PApplet _masterSketch, PVector _position, PVector _size, PVector _sizeConstraints, int _colour, float _movementSpeed, char _keyUp, char _keyDown) {
         super(_masterSketch, _position, _size, _colour);
         movementSpeed = _movementSpeed;
@@ -29,18 +31,26 @@ public class Player extends Rectangle {
 
     private void handlePlayerMovement(){
         if(masterSketch.keyPressed) {
+            moving = true;
             if(masterSketch.key == keyUp)
                 position.y -= movementSpeed; //fucking processing and their we start left bottom type bullshit
             if(masterSketch.key == keyDown)
                 position.y += movementSpeed;
         }
+        else
+            moving = false;
     }
 
+    //setup custom constraints where the player can move between.
     private void handlePlayerConstraints(){
         if(position.y <= sizeContraints.x + (size.y / 2))
             position.y = sizeContraints.x + (size.y / 2);
 
         if(position.y >= sizeContraints.y - (size.y / 2))
             position.y = sizeContraints.y - (size.y / 2);
+    }
+
+    public boolean getMoving(){
+        return moving;
     }
 }
